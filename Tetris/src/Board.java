@@ -104,7 +104,7 @@ public class Board {
 	public int dropHeight(Piece piece, int x) {
 		// YOUR CODE HERE
 
-		boolean[][] empty = new boolean[this.width][this.width];
+		boolean[][] empty = new boolean[this.width][this.height];
 		for (int i = 0; i < this.width; i++) {
 			for (int j = 0; j < this.height; j++) {
 				empty[i][j] = false;
@@ -196,12 +196,11 @@ public class Board {
 
 		// Placement de la pièce si possible.
 		for (TPoint p : piece.getBody()) {
-			if (x + p.x >= this.width || y + p.y >= this.height) {
-				return PLACE_OUT_BOUNDS;
-			} else if (this.getGrid(x + p.x, y + p.y)) {
+			if (x + p.x >= this.width || y + p.y >= this.height || x + p.x < 0 || y + p.y < 0) {
+				return PLACE_OUT_BOUNDS;}
+			else if (this.grid[x+p.x][y+p.y]) {
 				return PLACE_BAD;
 			}
-
 			else {
 				this.grid[x + p.x][y + p.y] = true;
 			}
@@ -226,7 +225,7 @@ public class Board {
 
 			this.widths[i] = fill;
 		}
-
+		
 		// Détermine si au moins une ligne a été remplie.
 
 		for (TPoint p : piece.getBody()) {
